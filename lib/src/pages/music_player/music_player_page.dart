@@ -38,10 +38,6 @@ class MusicPlayerPage extends StatelessWidget {
           SizedBox(height: 40),
 
           _buttonSection()
-
-
-
-
         ],
         // child: MusicTimer(),
         
@@ -85,20 +81,24 @@ class MusicPlayerPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           MusicControlButton.large(
-            child: SvgPicture.asset('assets/images/play_icon.svg')
+            child: SvgPicture.asset('assets/images/play_icon.svg'),
+            onFinishPress: _play,
           ),
           SizedBox(height: _buttonVerticalSpacing),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               MusicControlButton.small(
-                child: SvgPicture.asset('assets/images/back_icon.svg')
+                child: SvgPicture.asset('assets/images/back_icon.svg'),
+                onFinishPress: _back,
               ),
               MusicControlButton.small(
-                child: SvgPicture.asset('assets/images/forward_icon.svg')
+                child: SvgPicture.asset('assets/images/forward_icon.svg'),
+                onFinishPress: _forward,
               ),
               MusicControlButton.small(
-                child: SvgPicture.asset('assets/images/stop_icon.svg')
+                child: SvgPicture.asset('assets/images/stop_icon.svg'),
+                onFinishPress: _stop,
               ),
             ],
           )
@@ -123,5 +123,22 @@ class MusicPlayerPage extends StatelessWidget {
       artistName, 
       style: TextStyle(fontSize: fontSize, fontFamily: 'digital-7', color: Colors.white)
     );
+  }
+
+  // TODO: Player Functions
+  void _play() {
+
+  }
+
+  void _stop() {
+
+  }
+
+  void _back() {
+
+  }
+
+  void _forward() {
+
   }
 }

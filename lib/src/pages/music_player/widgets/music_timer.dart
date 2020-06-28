@@ -13,43 +13,75 @@ class MusicTimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(_timerPadding),
-      height: _timerHeight,
-      width: _timerWidth,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(_timerRadius),
-        color: timerColor
-      ),
-      child: Row(            
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Column(
+    return Stack(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(_timerPadding),
+          height: _timerHeight,
+          width: _timerWidth,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(_timerRadius),
+            color: timerColor
+          ),
+          child: Row(            
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              _SimpleButton(label: 'LIST', onPressed: () {} ),
-              SizedBox(height: _spacingHeight),
-              _SimpleButton(label: 'BAND', onPressed: () {} )
+              Column(
+                children: <Widget>[
+                  _SimpleButton(label: 'LIST', onPressed: () {} ),
+                  SizedBox(height: _spacingHeight),
+                  _SimpleButton(label: 'BAND', onPressed: () {} )
+                ],
+              ),
+              Column(
+                children: <Widget>[
+                  SizedBox(height: _spacingHeight * 3),
+                  _TimerScreen(timerValue: '1:30'),
+                ],
+              ),
+              Column(
+                children: <Widget>[
+                  _SimpleButton(label: 'HOUR', onPressed: () {} ),
+                  SizedBox(height: _spacingHeight),
+                  _SimpleButton(
+                    label: '', 
+                    bottomLabel: 'TUNNING',
+                    onPressed: () {}, 
+                    child: Icon(Icons.add, color: Colors.white, size: _buttonIconSize)
+                   )
+                ],
+              ),
             ],
           ),
-          Column(
-            children: <Widget>[
-              SizedBox(height: _spacingHeight * 3),
-              _TimerScreen(timerValue: '1:30'),
-            ],
-          ),
-          Column(
-            children: <Widget>[
-              _SimpleButton(label: 'HOUR', onPressed: () {} ),
-              SizedBox(height: _spacingHeight),
-              _SimpleButton(
-                label: '', 
-                bottomLabel: 'TUNNING',
-                onPressed: () {}, 
-                child: Icon(Icons.add, color: Colors.white, size: _buttonIconSize)
-               )
-            ],
-          ),
-        ],
+        ),
+
+        Positioned(
+          right: 45,
+          bottom: 15,
+          child:  _circleButton(Icon(Icons.remove, color: Colors.white, size: _buttonIconSize)),
+        ),
+         
+        Positioned (
+          left: 60,
+          bottom: 20,
+          child: _MuteButton(onPressed: () {}),
+        )
+      ],
+    );
+  }
+
+  Widget _circleButton(Widget child) {
+    final double radius = 9.5;
+
+    return GestureDetector(
+      child: Container(
+        height: radius * 2,
+        width: radius * 2,
+        decoration: BoxDecoration(
+          color: buttonTimerColor,
+          shape: BoxShape.circle
+        ),
+        child: Center(child: child),
       ),
     );
   }
@@ -144,6 +176,41 @@ class _SimpleButton extends StatelessWidget {
         ),
         child: Center(child: child),
       ),
+    );
+  }
+}
+
+class _MuteButton extends StatelessWidget {
+  
+  final Function onPressed;
+
+  _MuteButton({@required this.onPressed});
+
+  final double _buttonHeight = 8;
+  final double _buttonWidth = 64;
+  final double _buttonRadius = 5;
+
+  final String _label = 'MUTE';
+
+  final double _fontSize = 8;
+  final double _verticalSpacing = 5;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          height: _buttonHeight,
+          width: _buttonWidth,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(_buttonRadius),
+            color: buttonTimerColor
+          ),
+        ),
+        SizedBox(height: _verticalSpacing),
+        Text(_label, style: TextStyle(fontSize: _fontSize))
+      ],
     );
   }
 }

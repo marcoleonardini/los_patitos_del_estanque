@@ -112,7 +112,30 @@ class Cassette extends StatelessWidget {
           top: 35,
           right: 35,
           child: SideSticker(),
+        ),
+
+        // Screws
+        Positioned(
+          top: 5,
+          left: 5,
+          child: CicrularScrew(),
+        ),
+        Positioned(
+          top: 5,
+          right: 5,
+          child: CicrularScrew(),
+        ),
+        Positioned(
+          bottom: 5,
+          left: 5,
+          child: CicrularScrew(),
+        ),
+        Positioned(
+          bottom: 5,
+          right: 5,
+          child: CicrularScrew(),
         )
+        
       ],
     );
   }
@@ -237,6 +260,51 @@ class SideSticker extends StatelessWidget {
         borderRadius: BorderRadius.circular(radius)
       ),
       child: Center(child: SvgPicture.asset('assets/images/side_a_icon.svg')),
+    );
+  }
+}
+
+class CicrularScrew extends StatelessWidget {
+  
+  final double _screwRadius = 10;
+  final double _screwBorderRadius = 50;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(_screwBorderRadius),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            height: _screwRadius * 2,
+            width: _screwRadius * 2,
+            decoration: BoxDecoration(
+              color: screwColor,
+              shape: BoxShape.circle,
+            ),
+          ),
+
+          Positioned(
+            right: -3,
+            bottom: -3,
+            child: Container(
+              height: _screwRadius * 2,
+              width: _screwRadius * 2,
+              decoration: BoxDecoration(
+                color: playerButtonShadow,
+                shape: BoxShape.circle
+              ),
+            ),
+          ),
+
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.center,
+              child: Icon(Icons.add, color: Colors.black, size: 16,)
+            ),
+          )
+        ],
+      ),
     );
   }
 }
