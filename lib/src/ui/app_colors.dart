@@ -27,3 +27,9 @@ const Color yellowSticker = Color(0xffF2BC1B);
 
 // Player Buttons
 const Color playerButtonShadow = Color(0xff7B8190);
+
+// Timer Colors
+const Color timerColor = Color(0xffF2F0F0);
+const Color screenColor = Color(0xffC6C5C5);
+const Color screenBorderColor = Color(0xff707070);
+const Color buttonTimerColor = Color(0xff0D0D0D);

@@ -8,7 +8,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
-      home: MusicPlayerPage()
+      home: MusicPlayerPage(
+        songName: 'SAFE AND SOUND',
+        artistName: 'CAPITAL CITIES',
+      )
     );
   }
 }
