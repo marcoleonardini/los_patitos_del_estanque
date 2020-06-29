@@ -3,6 +3,10 @@ import 'package:los_patitos_del_estanque/src/ui/app_colors.dart';
 
 class MusicTimer extends StatelessWidget {
   
+  final String duration;
+
+  MusicTimer(this.duration);
+
   final double _timerHeight = 115;
   final double _timerWidth = 255; 
   final double _timerPadding = 10;
@@ -36,7 +40,7 @@ class MusicTimer extends StatelessWidget {
               Column(
                 children: <Widget>[
                   SizedBox(height: _spacingHeight * 3),
-                  _TimerScreen(timerValue: '1:30'),
+                  _TimerScreen(timerValue: this.duration.toString()),
                 ],
               ),
               Column(

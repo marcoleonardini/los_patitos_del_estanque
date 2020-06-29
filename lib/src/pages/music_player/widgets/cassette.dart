@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:los_patitos_del_estanque/src/ui/app_colors.dart';
 
-class Cassette extends StatelessWidget {
+class CompleteCassete extends StatelessWidget {
   
   final double _cassetteHeight = 216;
   final double _cassetteWidth = 346;
@@ -179,14 +179,23 @@ class _CassetteStripState extends State<CassetteStrip> with SingleTickerProvider
     _animation = new Tween(begin: 0.0, end: 2.0).animate(_controller);
   
     _controller.addListener(() {
-      print(_controller.status); 
+      if(_controller.status == AnimationStatus.completed) {
+        _controller.forward(from: 0.0);
+      }
     });
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
- 
-    _controller.repeat();
+
+    _controller.forward();
 
     return AnimatedBuilder(
       animation: _controller,

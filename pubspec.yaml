@@ -31,6 +31,8 @@ dependencies:
   flutter_svg:
   font_awesome_flutter:
   provider:
+  http:
+  audioplayers: 
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +61,7 @@ flutter:
     - assets/images/forward_icon.svg
     - assets/images/stop_icon.svg
     - assets/images/side_a_icon.svg
+    - assets/images/loading.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

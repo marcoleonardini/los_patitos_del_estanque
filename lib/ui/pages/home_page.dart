@@ -1,46 +1,91 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:los_patitos_del_estanque/core/api/deezer_api.dart';
+import 'package:los_patitos_del_estanque/models/album.dart';
 import 'package:los_patitos_del_estanque/src/pages/music_player/music_player_page.dart';
+import 'package:los_patitos_del_estanque/src/pages/music_player/widgets/cassette.dart';
+import 'package:los_patitos_del_estanque/src/ui/app_colors.dart';
 
 class HomePage extends StatelessWidget {
+  
+  final List<int> firstRowAlbumIds = [
+    119606,
+    81763,
+    7373433,
+    423368,
+    6157080,
+  ];
+  
+  final List<int> secondRowAlbumIds = [
+    137217782,
+    135472242,
+    43159701,
+    11898198,
+    125500082
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Container(
+          padding: EdgeInsets.only(left: 50),
           decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage('images/fondo.png'),
-            ),
+            color: backgroundColor
           ),
           constraints: BoxConstraints.expand(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                width: double.infinity,
-                height: 250,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Cassette(
-                      albumName: 'Retro music',
-                    );
-                  },
-                ),
+              FutureBuilder(
+                future: DeezerApi.getListAlbumByListId(firstRowAlbumIds),
+                builder: (context, snapshot) {
+
+                  if(!snapshot.hasData) 
+                    return Center(child: CircularProgressIndicator());
+                    
+                  List<Album> albumList = snapshot.data;
+
+                  return SizedBox(
+                    width: double.infinity,
+                    height: 250,
+                    child: ListView.builder(
+                      itemCount: albumList.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Cassette(
+                          mAlbum: albumList.elementAt(index),
+                        );
+                      },
+                    ),
+                  );
+                }
               ),
-              SizedBox(
-                width: double.infinity,
-                height: 250,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Cassette(
-                      albumName: 'Retro music',
-                    );
-                  },
-                ),
+              FutureBuilder(
+                future: DeezerApi.getListAlbumByListId(secondRowAlbumIds),
+                builder: (context, snapshot) {
+
+                  if(!snapshot.hasData) 
+                    return Center(child: CircularProgressIndicator());
+                    
+                  List<Album> albumList = snapshot.data;
+                  print("Album list tam: " + albumList.length.toString());
+
+                  return SizedBox(
+                    width: double.infinity,
+                    height: 250,
+                    child: ListView.builder(
+                      itemCount: albumList.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Cassette(
+                          mAlbum: albumList.elementAt(index),
+                        );
+                      },
+                    ),
+                  );
+                }
               ),
             ],
           ),
@@ -51,9 +96,10 @@ class HomePage extends StatelessWidget {
 }
 
 class Cassette extends StatelessWidget {
-  final String albumName;
 
-  const Cassette({Key key, this.albumName}) : super(key: key);
+  final Album mAlbum;
+
+  const Cassette({Key key, this.mAlbum}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -79,7 +125,7 @@ class Cassette extends StatelessWidget {
               child: RotatedBox(
                 quarterTurns: -1,
                 child: Text(
-                  albumName,
+                  mAlbum.title,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontFamily: 'Titles', fontSize: 18.0),
                 ),
@@ -131,8 +177,31 @@ class Cassette extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Center(
-                      child: Image.asset(
-                        'images/Cass.png',
+                      child: Stack(
+                        children: <Widget>[
+                          CompleteCassete(),
+
+                          Positioned.fill(
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                height: 80,
+                                width: 80,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: FadeInImage.assetNetwork(
+                                    fadeInDuration: Duration(seconds: 1),
+                                    placeholder: 'assets/images/loading.gif',
+                                    image: mAlbum.coverMedium,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -144,17 +213,22 @@ class Cassette extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'Queen',
+                            mAlbum.title,
                             style: TextStyle(fontSize: 24.0),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            mAlbum.artist.name,
+                            style: TextStyle(fontSize: 16.0),
                           ),
                           Divider(),
                           Expanded(
                             child: ListView.separated(
                               separatorBuilder: (_, __) => Divider(),
-                              itemCount: 50,
+                              itemCount: mAlbum.tracks.data.length,
                               itemBuilder: (context, index) {
                                 return SongName(
-                                  name: index.toString(),
+                                  track: mAlbum.tracks.data.elementAt(index),
                                 );
                               },
                             ),
@@ -163,26 +237,6 @@ class Cassette extends StatelessWidget {
                       ),
                     ),
                   ),
-                  FlatButton(
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        'Reproducir',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    onPressed: () {
-
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (_) => MusicPlayerPage(
-                                                            artistName: 'CAPITAL CITIES',
-                                                            songName: 'SAFE AND SOUND',
-                                                          )
-                      ));
-
-                    }
-                  )
                 ],
               ),
             ),
@@ -195,21 +249,36 @@ class Cassette extends StatelessWidget {
 
 // Widget que son los nombre de las canciones
 class SongName extends StatelessWidget {
-  final String name;
+  final TracksDatum track;
   const SongName({
     Key key,
-    this.name,
+    this.track,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      name,
-      style: TextStyle(
-        fontFamily: 'Cassettes',
-        // fontWeight: FontWeight.bold,
-        fontSize: 18.0,
+    return InkWell(
+      child: Text(
+        track.title,
+        style: TextStyle(
+          fontFamily: 'Cassettes',
+          // fontWeight: FontWeight.bold,
+          fontSize: 18.0,
+        ),
       ),
+
+      onTap: () {
+
+        Navigator.push(
+          context, 
+          CupertinoPageRoute(
+            builder: (_) => MusicPlayerPage(
+              mTrack: track,
+            )
+          )
+        );
+
+      },
     );
   }
 }

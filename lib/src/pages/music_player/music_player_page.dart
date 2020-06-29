@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:los_patitos_del_estanque/models/album.dart';
 import 'package:los_patitos_del_estanque/src/pages/music_player/widgets/cassette.dart';
 import 'package:los_patitos_del_estanque/src/pages/music_player/widgets/music_control_button.dart';
 import 'package:los_patitos_del_estanque/src/pages/music_player/widgets/music_timer.dart';
 import 'package:los_patitos_del_estanque/src/ui/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class MusicPlayerPage extends StatelessWidget {
   
-  final String songName;
-  final String artistName;
+  final TracksDatum mTrack;
+  AudioPlayer audioPlayer = new AudioPlayer();
   
-  MusicPlayerPage({@required this.songName, @required this.artistName});
+  MusicPlayerPage({@required this.mTrack});
 
   final double _buttonsContainerWidth = 250;
   final double _buttonVerticalSpacing = 20;
@@ -25,10 +27,10 @@ class MusicPlayerPage extends StatelessWidget {
         children: <Widget>[
           SizedBox(width: double.infinity),
 
-          Cassette(),
+          CompleteCassete(),
           SizedBox(height: 30),
 
-          MusicTimer(),
+          MusicTimer(_parseSecondsToTimer(mTrack.duration)),
           SizedBox(height: 40),
 
           _songName(),
@@ -39,37 +41,6 @@ class MusicPlayerPage extends StatelessWidget {
 
           _buttonSection()
         ],
-        // child: MusicTimer(),
-        
-        // child: Container(
-          // width: _buttonsContainerWidth,
-          // child: Column(
-            // mainAxisSize: MainAxisSize.min,
-            // children: <Widget>[
-              // MusicControlButton.large(
-                // child: SvgPicture.asset('assets/images/play_icon.svg')
-              // ),
-              // SizedBox(height: _buttonVerticalSpacing),
-              // Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // children: <Widget>[
-                  // MusicControlButton.small(
-                    // child: SvgPicture.asset('assets/images/back_icon.svg')
-                  // ),
-                  // MusicControlButton.small(
-                    // child: SvgPicture.asset('assets/images/forward_icon.svg')
-                  // ),
-                  // MusicControlButton.small(
-                    // child: SvgPicture.asset('assets/images/stop_icon.svg')
-                  // ),
-                // ],
-              // )
-            // ],
-          // ),
-        // )
-
-        // child: Cassette(),
-
       ),
     );
   }
@@ -111,7 +82,7 @@ class MusicPlayerPage extends StatelessWidget {
     final double fontSize = 40;
     
     return Text(
-      songName, 
+      mTrack.title, 
       style: TextStyle(fontSize: fontSize, fontFamily: 'digital-7', color: Colors.white)
     );
   }
@@ -120,18 +91,18 @@ class MusicPlayerPage extends StatelessWidget {
     final double fontSize = 24;
 
     return Text(
-      artistName, 
+      mTrack.artist.name, 
       style: TextStyle(fontSize: fontSize, fontFamily: 'digital-7', color: Colors.white)
     );
   }
 
   // TODO: Player Functions
   void _play() {
-
+    audioPlayer.play(mTrack.preview);
   }
 
   void _stop() {
-
+    audioPlayer.pause();
   }
 
   void _back() {
@@ -140,5 +111,12 @@ class MusicPlayerPage extends StatelessWidget {
 
   void _forward() {
 
+  }
+
+  String _parseSecondsToTimer(int mSeconds) {
+    int minutes = mSeconds ~/ 60;
+    int seconds = mSeconds % 60;
+
+    return "$minutes:$seconds";
   }
 }
