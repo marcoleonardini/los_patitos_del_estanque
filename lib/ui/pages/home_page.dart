@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:los_patitos_del_estanque/src/pages/music_player/music_player_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -170,7 +171,17 @@ class Cassette extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (_) => MusicPlayerPage(
+                                                            artistName: 'CAPITAL CITIES',
+                                                            songName: 'SAFE AND SOUND',
+                                                          )
+                      ));
+
+                    }
                   )
                 ],
               ),
