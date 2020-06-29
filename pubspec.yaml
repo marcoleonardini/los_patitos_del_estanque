@@ -48,6 +48,8 @@ flutter:
   assets:
     - images/wood.jpg
     - images/tdk.png
+    - images/Cass.png
+    - images/fondo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
