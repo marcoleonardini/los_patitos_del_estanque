@@ -134,18 +134,18 @@ class Cassette extends StatelessWidget {
                     child: Container(
                       child: Column(
                         children: [
-                          Text('Queen'),
+                          Text(
+                            'Queen',
+                            style: TextStyle(fontSize: 24.0),
+                          ),
                           Divider(),
                           Row(
                             children: [
                               Expanded(
-                                child: Text('Cancion 1'),
+                                child: SongName(name: 'Cancion 1'),
                               ),
                               Expanded(
-                                child: Text('Cancion 2'),
-                              ),
-                              Expanded(
-                                child: Text('Cancion 3'),
+                                child: SongName(name: 'Cancion 2'),
                               ),
                             ],
                           ),
@@ -153,13 +153,10 @@ class Cassette extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                child: Text('Cancion 4'),
+                                child: SongName(name: 'Cancion 4'),
                               ),
                               Expanded(
-                                child: Text('Cancion 5'),
-                              ),
-                              Expanded(
-                                child: Text('Cancion 6'),
+                                child: SongName(name: 'Cancion 5'),
                               ),
                             ],
                           ),
@@ -167,13 +164,10 @@ class Cassette extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                child: Text('Cancion 7'),
+                                child: SongName(name: 'Cancion 7'),
                               ),
                               Expanded(
-                                child: Text('Cancion 8'),
-                              ),
-                              Expanded(
-                                child: Text('Cancion 9sss sssssss'),
+                                child: SongName(name: 'Cancion 8'),
                               ),
                             ],
                           )
@@ -197,6 +191,26 @@ class Cassette extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class SongName extends StatelessWidget {
+  final String name;
+  const SongName({
+    Key key,
+    this.name,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      name,
+      style: TextStyle(
+        fontFamily: 'Cassettes',
+        // fontWeight: FontWeight.bold,
+        fontSize: 18.0,
+      ),
     );
   }
 }
