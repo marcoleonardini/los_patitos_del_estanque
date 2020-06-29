@@ -67,6 +67,9 @@ flutter:
     - family: Cassettes
       fonts:
         - asset: fonts/Intimacy.ttf
+    - family: Titles
+      fonts:
+        - asset: fonts/gloria.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

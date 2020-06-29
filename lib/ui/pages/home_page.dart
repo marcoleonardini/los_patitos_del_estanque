@@ -73,6 +73,7 @@ class Cassette extends StatelessWidget {
                 child: Text(
                   'Retro Gaming Music',
                   textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: 'Titles', fontSize: 18.0),
                 ),
               ),
             ),
