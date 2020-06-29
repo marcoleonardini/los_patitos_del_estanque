@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
                 builder: (context, snapshot) {
 
                   if(!snapshot.hasData) 
-                    return Center(child: CircularProgressIndicator());
+                    return CircularProgressIndicator();
                     
                   List<Album> albumList = snapshot.data;
 
@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
                 builder: (context, snapshot) {
 
                   if(!snapshot.hasData) 
-                    return Center(child: CircularProgressIndicator());
+                    return Container();
                     
                   List<Album> albumList = snapshot.data;
                   print("Album list tam: " + albumList.length.toString());

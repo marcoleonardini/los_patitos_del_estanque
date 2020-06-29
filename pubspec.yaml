@@ -62,6 +62,7 @@ flutter:
     - assets/images/stop_icon.svg
     - assets/images/side_a_icon.svg
     - assets/images/loading.gif
+    - assets/images/logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -33,3 +33,6 @@ const Color timerColor = Color(0xffF2F0F0);
 const Color screenColor = Color(0xffC6C5C5);
 const Color screenBorderColor = Color(0xff707070);
 const Color buttonTimerColor = Color(0xff0D0D0D);
+
+// Splash Color
+const Color splashColor = Color(0xffFFE74B);

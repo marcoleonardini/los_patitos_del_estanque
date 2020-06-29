@@ -98,6 +98,7 @@ class MusicPlayerPage extends StatelessWidget {
 
   // TODO: Player Functions
   void _play() {
+    print(mTrack.preview);
     audioPlayer.play(mTrack.preview);
   }
 

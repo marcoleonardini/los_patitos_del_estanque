@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:los_patitos_del_estanque/ui/pages/home_page.dart';
+import 'package:los_patitos_del_estanque/ui/pages/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: SplashScreen(),
     );
   }
 }
