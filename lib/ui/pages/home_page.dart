@@ -17,25 +17,29 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Cassette(),
-                  Cassette(),
-                  Cassette(),
-                  Cassette(),
-                  Cassette(),
-                ],
+              SizedBox(
+                width: double.infinity,
+                height: 250,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Cassette(
+                      albumName: 'Retro music',
+                    );
+                  },
+                ),
               ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Cassette(),
-                  Cassette(),
-                  Cassette(),
-                  Cassette(),
-                  Cassette(),
-                ],
+              SizedBox(
+                width: double.infinity,
+                height: 250,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Cassette(
+                      albumName: 'Retro music',
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -46,6 +50,9 @@ class HomePage extends StatelessWidget {
 }
 
 class Cassette extends StatelessWidget {
+  final String albumName;
+
+  const Cassette({Key key, this.albumName}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -54,7 +61,7 @@ class Cassette extends StatelessWidget {
       },
       child: Container(
         width: 50,
-        height: 200,
+        height: 250,
         margin: EdgeInsets.all(4),
         alignment: Alignment.center,
         child: Column(
@@ -71,7 +78,7 @@ class Cassette extends StatelessWidget {
               child: RotatedBox(
                 quarterTurns: -1,
                 child: Text(
-                  'Retro Gaming Music',
+                  albumName,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontFamily: 'Titles', fontSize: 18.0),
                 ),
@@ -140,38 +147,17 @@ class Cassette extends StatelessWidget {
                             style: TextStyle(fontSize: 24.0),
                           ),
                           Divider(),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: SongName(name: 'Cancion 1'),
-                              ),
-                              Expanded(
-                                child: SongName(name: 'Cancion 2'),
-                              ),
-                            ],
+                          Expanded(
+                            child: ListView.separated(
+                              separatorBuilder: (_, __) => Divider(),
+                              itemCount: 50,
+                              itemBuilder: (context, index) {
+                                return SongName(
+                                  name: index.toString(),
+                                );
+                              },
+                            ),
                           ),
-                          Divider(),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: SongName(name: 'Cancion 4'),
-                              ),
-                              Expanded(
-                                child: SongName(name: 'Cancion 5'),
-                              ),
-                            ],
-                          ),
-                          Divider(),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: SongName(name: 'Cancion 7'),
-                              ),
-                              Expanded(
-                                child: SongName(name: 'Cancion 8'),
-                              ),
-                            ],
-                          )
                         ],
                       ),
                     ),
@@ -196,6 +182,7 @@ class Cassette extends StatelessWidget {
   }
 }
 
+// Widget que son los nombre de las canciones
 class SongName extends StatelessWidget {
   final String name;
   const SongName({
